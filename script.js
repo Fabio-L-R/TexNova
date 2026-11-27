@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const revealEls = document.querySelectorAll('.reveal');
 
   // Atraso escalonado para itens irmãos (cards, passos, pilares)
-  document.querySelectorAll('.services__grid, .timeline, .pillars__list, .hero__text').forEach(group => {
+  document.querySelectorAll('.services__grid, .timeline, .pillars__list, .hero__text, .team__grid').forEach(group => {
     group.querySelectorAll(':scope > .reveal').forEach((el, i) => {
       el.style.setProperty('--delay', `${i * 0.1}s`);
     });
@@ -137,6 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.6 });
   counters.forEach(c => counterObserver.observe(c));
+
+  /* ---------- Fotos da equipe: mostra iniciais se a foto não existir ---------- */
+  document.querySelectorAll('.member__photo img').forEach(img => {
+    const showInitials = () => img.closest('.member__photo').classList.add('no-photo');
+    if (img.complete && img.naturalWidth === 0) showInitials();
+    img.addEventListener('error', showInitials);
+  });
 
   /* ---------- Brilho que acompanha o mouse nos cards ---------- */
   document.querySelectorAll('.card').forEach(card => {
